@@ -56,7 +56,17 @@ const LoginView = () => {
             {isLoading ? "Loading..." : "Login"}
           </button>
         </form>
+        <hr className={styles.login__form__divider} />
+        <div className={styles.login__form__other}>
+          <button
+            onClick={() => signIn("google", { callbackUrl, redirect: false })}
+            className={styles.login__form__other__button}
+          >
+            <i className="bx bxl-google"></i> Login With Google
+          </button>
+        </div>
       </div>
+
       <p className={styles.login__link}>
         Don{"'"}t have an account? Sign up here{" "}
         <Link href="/auth/register">here</Link>
