@@ -3,6 +3,8 @@ import styles from "./Login.module.scss";
 import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
 import { signIn } from "next-auth/react";
+import Input from "@/components/ui/Input";
+import Button from "@/components/ui/Button";
 
 const LoginView = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -44,26 +46,21 @@ const LoginView = () => {
       {error && <p className={styles.login__error}>{error}</p>}
       <div className={styles.login__form}>
         <form onSubmit={handleSubmit}>
-          <div className={styles.login__form__input}>
-            <label htmlFor="email">Email</label>
-            <input type="email" name="email" id="email" />
-          </div>
-          <div className={styles.login__form__input}>
-            <label htmlFor="password">Password</label>
-            <input type="password" name="password" id="password" />
-          </div>
-          <button className={styles.login__form__button} disabled={isLoading}>
+          <Input label="Email" name="email" type="email" />
+          <Input label="Password" name="password" type="password" />
+          <Button className={styles.login__form__button} disabled={isLoading}>
             {isLoading ? "Loading..." : "Login"}
-          </button>
+          </Button>
         </form>
         <hr className={styles.login__form__divider} />
         <div className={styles.login__form__other}>
-          <button
+          <Button
+            type="button"
             onClick={() => signIn("google", { callbackUrl, redirect: false })}
             className={styles.login__form__other__button}
           >
             <i className="bx bxl-google"></i> Login With Google
-          </button>
+          </Button>
         </div>
       </div>
 

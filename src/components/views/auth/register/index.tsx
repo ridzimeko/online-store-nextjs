@@ -2,6 +2,8 @@ import Link from "next/link";
 import styles from "./Register.module.scss";
 import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
+import Input from "@/components/ui/Input";
+import Button from "@/components/ui/Button";
 
 const RegisterView = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -44,28 +46,16 @@ const RegisterView = () => {
       {error && <p className={styles.register__error}>{error}</p>}
       <div className={styles.register__form}>
         <form onSubmit={handleSubmit}>
-          <div className={styles.register__form__input}>
-            <label htmlFor="email">Email</label>
-            <input type="email" name="email" id="email" />
-          </div>
-          <div className={styles.register__form__input}>
-            <label htmlFor="fullname">Fullname</label>
-            <input type="text" name="fullname" id="fullname" />
-          </div>
-          <div className={styles.register__form__input}>
-            <label htmlFor="phone">Phone</label>
-            <input type="text" name="phone" id="phone" />
-          </div>
-          <div className={styles.register__form__input}>
-            <label htmlFor="password">Password</label>
-            <input type="password" name="password" id="password" />
-          </div>
-          <button
+          <Input label="Email" name="email" type="email" />
+          <Input label="Fullname" name="fullname" type="text" />
+          <Input label="Phone" name="phone" type="number" />
+          <Input label="Password" name="password" type="password" />
+          <Button
             className={styles.register__form__button}
             disabled={isLoading}
           >
             {isLoading ? "Loading..." : "Register"}
-          </button>
+          </Button>
         </form>
       </div>
       <p className={styles.register__link}>
