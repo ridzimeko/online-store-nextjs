@@ -1,34 +1,5 @@
 .register {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-
-  &__error {
-    color: #fd3131;
-    margin-bottom: 1rem;
-  }
-
-  &__title {
-    margin-bottom: 1.2rem;
-  }
-
-  &__form {
-    border: 1px black solid;
-    padding: 1.5rem;
-    width: 360px;
-    margin-bottom: 1.2rem;
-
-    &__button {
-      width: 100%;
-    }
-  }
-
-  &__link {
-    a {
-      color: rgb(54, 175, 54);
-    }
+  &__button {
+    width: 100%;
   }
 }
