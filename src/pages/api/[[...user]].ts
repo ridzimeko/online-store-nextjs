@@ -20,7 +20,6 @@ export default async function handler(
     const { data } = req.body;
     const { user }: any = req.query;
     const token = req.headers.authorization?.split(" ")[1] || "";
-    // console.log(token, data, user);
     jwt.verify(
       token,
       process.env.NEXTAUTH_SECRET || "",
@@ -58,7 +57,6 @@ export default async function handler(
   } else if (req.method === "DELETE") {
     const { user }: any = req.query;
     const token = req.headers.authorization?.split(" ")[1] || "";
-    console.log(token);
     jwt.verify(
       token,
       process.env.NEXTAUTH_SECRET || "",

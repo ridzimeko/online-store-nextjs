@@ -1,7 +1,6 @@
 import Sidebar from "@/components/fragments/Sidebar";
 import styles from "./AdminLayout.module.scss";
 import React from "react";
-import { title } from "process";
 
 type Proptypes = {
   children: React.ReactNode;
