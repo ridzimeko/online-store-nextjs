@@ -18,11 +18,22 @@
       border-radius: 8px;
       padding: 40px;
 
-      img {
+      &__image {
         border-radius: 50%;
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        background-color: #eee;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 64px;
+        font-weight: bold;
       }
 
       &__label {
+        float: left;
+        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -34,12 +45,18 @@
         background-color: #eee;
         cursor: pointer;
         border-radius: 8px;
+        margin-bottom: 20px;
       }
 
       &__input {
         opacity: 0;
         position: absolute;
         z-index: -1;
+      }
+
+      &__button {
+        margin-top: 20px;
+        width: 100%;
       }
     }
 
