@@ -7,7 +7,12 @@ import { uploadFile } from "@/lib/firebase/service";
 import { useState } from "react";
 import userServices from "@/services/user";
 
-const ProfileMemberView = ({ profile, setProfile, session }: any) => {
+const ProfileMemberView = ({
+  profile,
+  setProfile,
+  session,
+  setToaster,
+}: any) => {
   const [changeImage, setChangeImage] = useState<any>({});
   const [isLoading, setIsLoading] = useState<String>("");
 
@@ -33,6 +38,10 @@ const ProfileMemberView = ({ profile, setProfile, session }: any) => {
         phone: data.phone,
       });
       form.reset();
+      setToaster({
+        variant: "success",
+        message: "Success Update Profile",
+      });
     } else {
       setIsLoading("");
     }
@@ -65,13 +74,20 @@ const ProfileMemberView = ({ profile, setProfile, session }: any) => {
               });
               setChangeImage({});
               e.target[0].value = "";
+              setToaster({
+                variant: "success",
+                message: "Success Change Avatar",
+              });
             } else {
               setIsLoading("");
             }
           } else {
             setIsLoading("");
             setChangeImage({});
-            alert("File size Exceeded");
+            setToaster({
+              variant: "danger",
+              message: "File size exceed limit",
+            });
           }
         }
       );
@@ -87,7 +103,6 @@ const ProfileMemberView = ({ profile, setProfile, session }: any) => {
       password: form["new-password"].value,
       encryptedPassword: profile.password,
     };
-    console.log(data);
 
     const result = await userServices.updateProfile(
       profile.id,
@@ -99,8 +114,16 @@ const ProfileMemberView = ({ profile, setProfile, session }: any) => {
       setIsLoading("");
       form.reset();
       e.target[0].value = "";
+      setToaster({
+        variant: "success",
+        message: "Success Update Password",
+      });
     } else {
       setIsLoading("");
+      setToaster({
+        variant: "danger",
+        message: "Failed Update Profile",
+      });
     }
   };
 
