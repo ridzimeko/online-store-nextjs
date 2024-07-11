@@ -1,6 +1,5 @@
 import { retrieveDataById, updateData } from "@/lib/firebase/service";
 import bcrypt from "bcrypt";
-import { hash } from "crypto";
 import jwt from "jsonwebtoken";
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -58,8 +57,6 @@ export default async function handler(
               data.oldPassword,
               data.encryptedPassword
             );
-
-            console.log(passwordConfirm);
 
             if (!passwordConfirm) {
               res.status(400).json({
