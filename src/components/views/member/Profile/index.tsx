@@ -4,19 +4,27 @@ import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import Image from "next/image";
 import { uploadFile } from "@/lib/firebase/service";
-import { useState } from "react";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import userServices from "@/services/user";
+import { User } from "@/types/user.type";
+
+type PropTypes = {
+  profile: User | any;
+  setProfile: Dispatch<SetStateAction<any>>;
+  session: any;
+  setToaster: Dispatch<SetStateAction<{}>>;
+};
 
 const ProfileMemberView = ({
   profile,
   setProfile,
   session,
   setToaster,
-}: any) => {
-  const [changeImage, setChangeImage] = useState<any>({});
-  const [isLoading, setIsLoading] = useState<String>("");
+}: PropTypes) => {
+  const [changeImage, setChangeImage] = useState<File | any>({});
+  const [isLoading, setIsLoading] = useState<string>("");
 
-  const handleChangeProfile = async (e: any) => {
+  const handleChangeProfile = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading("profile");
     const form = e.target as HTMLFormElement;
@@ -25,7 +33,6 @@ const ProfileMemberView = ({
       phone: form.phone.value,
     };
     const result = await userServices.updateProfile(
-      profile.id,
       data,
       session.data?.accessToken
     );
@@ -47,10 +54,11 @@ const ProfileMemberView = ({
     }
   };
 
-  const handleChangeProfilePicture = (e: any) => {
+  const handleChangeProfilePicture = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading("picture");
-    const file = e.target[0]?.files[0];
+    const form = e.target as HTMLFormElement;
+    const file = form.image.files[0];
     if (file) {
       uploadFile(
         profile.id,
@@ -61,7 +69,6 @@ const ProfileMemberView = ({
               image: newImageUrl,
             };
             const result = await userServices.updateProfile(
-              profile.id,
               data,
               session.data?.accessToken
             );
@@ -73,7 +80,7 @@ const ProfileMemberView = ({
                 image: newImageUrl,
               });
               setChangeImage({});
-              e.target[0].value = "";
+              form.reset();
               setToaster({
                 variant: "success",
                 message: "Success Change Avatar",
@@ -94,7 +101,7 @@ const ProfileMemberView = ({
     }
   };
 
-  const handleChangePassword = async (e: any) => {
+  const handleChangePassword = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading("password");
     const form = e.target as HTMLFormElement;
@@ -104,21 +111,21 @@ const ProfileMemberView = ({
       encryptedPassword: profile.password,
     };
 
-    const result = await userServices.updateProfile(
-      profile.id,
-      data,
-      session.data?.accessToken
-    );
+    try {
+      const result = await userServices.updateProfile(
+        data,
+        session.data?.accessToken
+      );
 
-    if (result.status === 200) {
-      setIsLoading("");
-      form.reset();
-      e.target[0].value = "";
-      setToaster({
-        variant: "success",
-        message: "Success Update Password",
-      });
-    } else {
+      if (result.status === 200) {
+        setIsLoading("");
+        form.reset();
+        setToaster({
+          variant: "success",
+          message: "Success Update Password",
+        });
+      }
+    } catch (error) {
       setIsLoading("");
       setToaster({
         variant: "danger",
@@ -200,6 +207,7 @@ const ProfileMemberView = ({
                 type="number"
                 name="phone"
                 defaultValue={profile.phone}
+                placeholder="Enter your phone number"
               />
               <Input
                 label="Email"
@@ -225,13 +233,29 @@ const ProfileMemberView = ({
               </Button>
             </form>
           </div>
+
           <div className={styles.profile__main__row__password}>
             <h2>Change Password</h2>
             <form onSubmit={handleChangePassword}>
-              <Input type="password" name="old-password" label="Old Password" />
-              <Input type="password" name="new-password" label="New Password" />
-              <Button type="submit">
-                {isLoading === "picture" ? "Loading..." : "Update Password"}
+              <Input
+                type="password"
+                name="old-password"
+                label="Old Password"
+                disabled={profile.type === "google"}
+                placeholder="Enter your current password"
+              />
+              <Input
+                type="password"
+                name="new-password"
+                label="New Password"
+                disabled={profile.type === "google"}
+                placeholder="Enter your new password"
+              />
+              <Button
+                type="submit"
+                disabled={isLoading === "password" || profile.type === "google"}
+              >
+                {isLoading === "password" ? "Loading..." : "Update Password"}
               </Button>
             </form>
           </div>

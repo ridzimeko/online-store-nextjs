@@ -45,7 +45,6 @@ export default async function handler(
     }
   } else if (req.method === "PUT") {
     const { data } = req.body;
-    const { user }: any = req.query;
     const token = req.headers.authorization?.split(" ")[1] || "";
     jwt.verify(
       token,
@@ -71,7 +70,7 @@ export default async function handler(
             data.password = await bcrypt.hash(data.password, 10);
           }
 
-          await updateData("users", user[0], data, (result: boolean) => {
+          await updateData("users", decoded.id, data, (result: boolean) => {
             if (result) {
               res.status(200).json({
                 status: true,

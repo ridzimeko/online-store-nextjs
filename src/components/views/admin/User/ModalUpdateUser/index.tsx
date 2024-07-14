@@ -3,12 +3,20 @@ import Input from "@/components/ui/Input";
 import Modal from "@/components/ui/Modal";
 import Select from "@/components/ui/Select";
 import userServices from "@/services/user";
-import { useSession } from "next-auth/react";
-import { FormEvent, useState } from "react";
+import { User } from "@/types/user.type";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 
-const ModalUpdateUser = (props: any) => {
-  const { updatedUser, setUpdatedUser, setUsersData, setToaster } = props;
-  const session: any = useSession();
+type PropTypes = {
+  setUsersData: Dispatch<SetStateAction<User[]>>;
+  setToaster: Dispatch<SetStateAction<{}>>;
+  updatedUser: User | any;
+  setUpdatedUser: Dispatch<SetStateAction<{}>>;
+  session: any;
+};
+
+const ModalUpdateUser = (props: PropTypes) => {
+  const { updatedUser, setUpdatedUser, setUsersData, setToaster, session } =
+    props;
   const { email, fullname, phone } = updatedUser;
   const [isLoading, setIsLoading] = useState(false);
 
@@ -77,7 +85,7 @@ const ModalUpdateUser = (props: any) => {
             { label: "Admin", value: "admin" },
           ]}
         />
-        <Button type="submit">Update</Button>
+        <Button type="submit">{isLoading ? "Updating..." : "Update"}</Button>
       </form>
     </Modal>
   );
