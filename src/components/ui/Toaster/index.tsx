@@ -4,7 +4,7 @@ import styles from "./Toaster.module.scss";
 type PropTypes = {
   variant?: string;
   message?: string;
-  setToaster?: Dispatch<SetStateAction<{}>>;
+  setToaster: Dispatch<SetStateAction<{}>>;
 };
 
 const toasterVariant: any = {
