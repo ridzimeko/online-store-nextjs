@@ -4,7 +4,8 @@
     pkgs.nodejs_20
   ];
   idx.extensions = [
-    
+    "dbaeumer.vscode-eslint"
+    "esbenp.prettier-vscode"
   ];
   idx.previews = {
     # previews = {

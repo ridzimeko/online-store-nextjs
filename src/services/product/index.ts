@@ -18,7 +18,11 @@ export const productServices = {
         },
       }
     ),
-  deleteProduct: () => instance.delete("/api/product"),
+  deleteProduct: (id: string, token: string) => instance.delete(`/api/product/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }),
 };
 
 export default productServices;
