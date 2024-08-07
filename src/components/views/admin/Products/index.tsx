@@ -21,8 +21,6 @@ const ProductsAdminView = (props: PropTypes) => {
   const [updatedProduct, setUpdatedProduct] = useState<Product | {}>({});
   const [deletedProduct, setDeletedProduct] = useState<Product | {}>({});
 
-  console.log(products);
-
   useEffect(() => {
     setProductsData(products);
   }, [products]);
