@@ -62,20 +62,20 @@ const ModalUpdateProduct = (props: PropTypes) => {
               setProductsData(data.data);
               setToaster({
                 variant: "success",
-                message: "Success Add Product",
+                message: "Success Update Product",
               });
             } else {
               setIsLoading(false);
               setToaster({
                 variant: "danger",
-                message: "Failed Add Product",
+                message: "Failed Update Product",
               });
             }
           } else {
             setIsLoading(false);
             setToaster({
               variant: "danger",
-              message: "Failed Add Product",
+              message: "Failed Update Product",
             });
           }
         }
@@ -87,6 +87,7 @@ const ModalUpdateProduct = (props: PropTypes) => {
     const data = {
       name: form.name.value,
       price: form.price.value,
+      description: form.description.value,
       category: form.category.value,
       status: form.status.value,
       stock: stockCount,
@@ -151,7 +152,7 @@ const ModalUpdateProduct = (props: PropTypes) => {
 
   return (
     <Modal onClose={() => setUpdatedProduct(false)}>
-      <h1>Update User</h1>
+      <h1>Update Product</h1>
       <form onSubmit={handleSubmit} className={styles.form}>
         <Input
           label="Name"
@@ -165,6 +166,13 @@ const ModalUpdateProduct = (props: PropTypes) => {
           name="price"
           type="number"
           defaultValue={updatedProduct.price}
+        />
+        <Input
+          label="Description"
+          name="description"
+          type="text"
+          placeholder="Insert product description"
+          defaultValue={updatedProduct.description}
         />
         <Select
           label="Category"
@@ -235,7 +243,7 @@ const ModalUpdateProduct = (props: PropTypes) => {
         </Button>
 
         <Button type="submit" disabled={isLoading}>
-          {isLoading ? "Loading..." : "Add product"}
+          {isLoading ? "Loading..." : "Update product"}
         </Button>
       </form>
     </Modal>

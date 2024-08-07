@@ -1,22 +1,23 @@
 .detail {
-  padding: 20vh 25vw;
+  padding: 20vh 20vw;
 
   &__main {
     display: flex;
     gap: 60px;
 
     &__left {
-      width: 50%;
+      width: 60%;
 
       &__image {
         width: 100%;
         height: auto;
-        scale: 1 / 1;
+        aspect-ratio: 1 / 1;
+        border-radius: 8px;
       }
     }
 
     &__right {
-      width: 50%;
+      width: 40%;
 
       &__category {
         color: #9b9b9b;
@@ -25,6 +26,12 @@
 
       &__price {
         margin-top: 20px;
+      }
+
+      &__description {
+        margin-top: 10px;
+        font-size: 16px;
+        line-height: 1.6;
       }
 
       &__subtitle {
@@ -68,9 +75,10 @@
       }
 
       &__add {
-        margin-top: 60px;
+        margin-top: 50px;
         width: 100%;
         padding: 30px;
+        padding: 25px !important;
       }
     }
   }
