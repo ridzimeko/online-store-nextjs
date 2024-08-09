@@ -9,7 +9,6 @@ import InputFile from "@/components/ui/InputFile";
 import Image from "next/image";
 import productServices from "@/services/product";
 import { uploadFile } from "@/lib/firebase/service";
-import { useSession } from "next-auth/react";
 
 type PropTypes = {
   updatedProduct: Product | any;
@@ -24,7 +23,6 @@ const ModalUpdateProduct = (props: PropTypes) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [stockCount, setStockCount] = useState(updatedProduct.stock);
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
-  const session: any = useSession();
 
   const handleStock = (e: any, i: number, type: string) => {
     const newStockCount: any = [...stockCount];
@@ -47,11 +45,7 @@ const ModalUpdateProduct = (props: PropTypes) => {
               image: newImageUrl,
             };
 
-            const result = await productServices.updateProduct(
-              id,
-              data,
-              session.data?.accessToken
-            );
+            const result = await productServices.updateProduct(id, data);
 
             if (result.status === 200) {
               setIsLoading(false);
@@ -83,7 +77,10 @@ const ModalUpdateProduct = (props: PropTypes) => {
     }
   };
 
-  const updateProduct = async (form: any, newImageUrl: string = updatedProduct.image) => {
+  const updateProduct = async (
+    form: any,
+    newImageUrl: string = updatedProduct.image
+  ) => {
     const data = {
       name: form.name.value,
       price: form.price.value,
@@ -94,11 +91,7 @@ const ModalUpdateProduct = (props: PropTypes) => {
       image: newImageUrl,
     };
 
-    const result = await productServices.updateProduct(
-      updatedProduct.id,
-      data,
-      session.data?.accessToken
-    );
+    const result = await productServices.updateProduct(updatedProduct.id, data);
 
     if (result.status === 200) {
       setIsLoading(false);
@@ -118,7 +111,7 @@ const ModalUpdateProduct = (props: PropTypes) => {
         message: "Failed Update Product",
       });
     }
-  }
+  };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -135,7 +128,7 @@ const ModalUpdateProduct = (props: PropTypes) => {
         "products",
         async (status: boolean, newImageUrl: string) => {
           if (status) {
-          updateProduct(form, newImageUrl)
+            updateProduct(form, newImageUrl);
           } else {
             setIsLoading(false);
             setToaster({
@@ -146,7 +139,7 @@ const ModalUpdateProduct = (props: PropTypes) => {
         }
       );
     } else {
-      updateProduct(form)
+      updateProduct(form);
     }
   };
 

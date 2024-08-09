@@ -11,12 +11,10 @@ type PropTypes = {
   setToaster: Dispatch<SetStateAction<{}>>;
   updatedUser: User | any;
   setUpdatedUser: Dispatch<SetStateAction<{}>>;
-  session: any;
 };
 
 const ModalUpdateUser = (props: PropTypes) => {
-  const { updatedUser, setUpdatedUser, setUsersData, setToaster, session } =
-    props;
+  const { updatedUser, setUpdatedUser, setUsersData, setToaster } = props;
   const { email, fullname, phone } = updatedUser;
   const [isLoading, setIsLoading] = useState(false);
 
@@ -28,11 +26,7 @@ const ModalUpdateUser = (props: PropTypes) => {
       role: form.role.value,
     };
 
-    const result = await userServices.updateUser(
-      updatedUser.id,
-      data,
-      session.data?.accessToken
-    );
+    const result = await userServices.updateUser(updatedUser.id, data);
 
     if (result.status === 200) {
       setIsLoading(false);

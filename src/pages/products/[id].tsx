@@ -9,10 +9,10 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 type PropTypes = {
   setToaster: Dispatch<SetStateAction<{}>>;
-}
+};
 
 const DetailProductPage = (props: PropTypes) => {
-  const {setToaster} = props
+  const { setToaster } = props;
   const { id } = useRouter().query;
   const session: any = useSession();
   const [product, setProduct] = useState<Product | {}>({});
@@ -23,8 +23,8 @@ const DetailProductPage = (props: PropTypes) => {
     setProduct(data.data);
   };
 
-  const getCart = async (token: string) => {
-    const { data } = await userServices.getCart(token);
+  const getCart = async () => {
+    const { data } = await userServices.getCart();
     setCart(data.data);
   };
 
@@ -34,7 +34,7 @@ const DetailProductPage = (props: PropTypes) => {
 
   useEffect(() => {
     if (session.data?.accessToken) {
-      getCart(session.data?.accessToken)
+      getCart();
     }
   }, [session]);
 
@@ -46,7 +46,12 @@ const DetailProductPage = (props: PropTypes) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <DetailProductView product={product} cart={cart} productId={id} setToaster={setToaster} />
+      <DetailProductView
+        product={product}
+        cart={cart}
+        productId={id}
+        setToaster={setToaster}
+      />
     </>
   );
 };

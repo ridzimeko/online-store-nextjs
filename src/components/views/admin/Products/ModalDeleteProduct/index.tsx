@@ -17,28 +17,30 @@ type PropTypes = {
 const ModalDeleteProduct = (props: PropTypes) => {
   const { deletedProduct, setDeletedProduct, setProductsData, setToaster } =
     props;
-    const session: any = useSession()
+  const session: any = useSession();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleDeleteUser = async () => {
-    const result = await productServices.deleteProduct(
-      deletedProduct.id,
-      session.data?.accessToken
-    );
+    const result = await productServices.deleteProduct(deletedProduct.id);
 
     if (result.status === 200) {
       setIsLoading(false);
       setDeletedProduct({});
-      deleteFile(`/images/products/${deletedProduct.id}/${deletedProduct.image.split("%2F")[3].split("?")[0]}`, async (status: boolean) => {
-        if (status) {
-          setToaster({
-            variant: "success",
-            message: "Success Delete Product",
-          });
-          const { data } = await productServices.getAllProducts();
-          setProductsData(data.data);
+      deleteFile(
+        `/images/products/${deletedProduct.id}/${
+          deletedProduct.image.split("%2F")[3].split("?")[0]
+        }`,
+        async (status: boolean) => {
+          if (status) {
+            setToaster({
+              variant: "success",
+              message: "Success Delete Product",
+            });
+            const { data } = await productServices.getAllProducts();
+            setProductsData(data.data);
+          }
         }
-      })
+      );
     } else {
       setIsLoading(false);
       setToaster({
