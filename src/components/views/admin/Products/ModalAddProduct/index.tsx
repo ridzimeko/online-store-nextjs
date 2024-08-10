@@ -79,14 +79,20 @@ const ModalAddProduct = (props: PropTypes) => {
     event.preventDefault();
     setIsLoading(true);
     const form: any = event.target as HTMLFormElement;
+    const stock = stockCount.map((stock) => {
+      return {
+        size: stock.size,
+        qty: parseInt(`${stock.qty}`),
+      };
+    });
 
     const data = {
       name: form.name.value,
-      price: form.price.value,
+      price: parseInt(form.price.value),
       description: form.description.value,
       category: form.category.value,
       status: form.status.value,
-      stock: stockCount,
+      stock: stock,
       image: "",
     };
 
@@ -106,18 +112,21 @@ const ModalAddProduct = (props: PropTypes) => {
           name="name"
           type="text"
           placeholder="Insert product name"
+          className={styles.form__input}
         />
         <Input
           label="Price"
           name="price"
           type="number"
           placeholder="Insert product price"
+          className={styles.form__input}
         />
         <Input
           label="Description"
           name="description"
           type="text"
           placeholder="Insert product description"
+          className={styles.form__input}
         />
         <Select
           label="Category"
@@ -126,6 +135,7 @@ const ModalAddProduct = (props: PropTypes) => {
             { label: "Men", value: "men" },
             { label: "Women", value: "women" },
           ]}
+          className={styles.form__input}
         />
         <Select
           label="Status"
@@ -134,6 +144,7 @@ const ModalAddProduct = (props: PropTypes) => {
             { label: "Released", value: "true" },
             { label: "Not Released", value: "false" },
           ]}
+          className={styles.form__input}
         />
         <label htmlFor="image">Image</label>
         <div className={styles.form__image}>
@@ -164,6 +175,7 @@ const ModalAddProduct = (props: PropTypes) => {
                 type="text"
                 placeholder="Insert product size"
                 onChange={(e) => handleStock(e, i, "size")}
+                className={styles.form__input}
               />
               <Input
                 label="Qty"
@@ -171,6 +183,7 @@ const ModalAddProduct = (props: PropTypes) => {
                 type="number"
                 placeholder="Insert product quantity"
                 onChange={(e) => handleStock(e, i, "qty")}
+                className={styles.form__input}
               />
             </div>
           </div>

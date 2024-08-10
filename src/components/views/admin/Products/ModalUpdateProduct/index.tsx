@@ -81,13 +81,20 @@ const ModalUpdateProduct = (props: PropTypes) => {
     form: any,
     newImageUrl: string = updatedProduct.image
   ) => {
+    const stock = stockCount.map((stock: { size: string; qty: number }) => {
+      return {
+        size: stock.size,
+        qty: parseInt(`${stock.qty}`),
+      };
+    });
+
     const data = {
       name: form.name.value,
-      price: form.price.value,
+      price: parseInt(form.price.value),
       description: form.description.value,
       category: form.category.value,
       status: form.status.value,
-      stock: stockCount,
+      stock: stock,
       image: newImageUrl,
     };
 
@@ -153,12 +160,14 @@ const ModalUpdateProduct = (props: PropTypes) => {
           type="text"
           placeholder="Insert product name"
           defaultValue={updatedProduct.name}
+          className={styles.form__input}
         />
         <Input
           label="Price"
           name="price"
           type="number"
           defaultValue={updatedProduct.price}
+          className={styles.form__input}
         />
         <Input
           label="Description"
@@ -166,6 +175,7 @@ const ModalUpdateProduct = (props: PropTypes) => {
           type="text"
           placeholder="Insert product description"
           defaultValue={updatedProduct.description}
+          className={styles.form__input}
         />
         <Select
           label="Category"
@@ -175,6 +185,7 @@ const ModalUpdateProduct = (props: PropTypes) => {
             { label: "Women", value: "women" },
           ]}
           defaultValue={updatedProduct.category}
+          className={styles.form__input}
         />
         <Select
           label="Status"
@@ -184,6 +195,7 @@ const ModalUpdateProduct = (props: PropTypes) => {
             { label: "Not Released", value: "false" },
           ]}
           defaultValue={updatedProduct.status}
+          className={styles.form__input}
         />
         <label htmlFor="image">images</label>
         <div className={styles.form__image}>
@@ -215,6 +227,7 @@ const ModalUpdateProduct = (props: PropTypes) => {
                 placeholder="Insert product size"
                 onChange={(e) => handleStock(e, i, "size")}
                 defaultValue={item.size}
+                className={styles.form__input}
               />
               <Input
                 label="Qty"
@@ -223,6 +236,7 @@ const ModalUpdateProduct = (props: PropTypes) => {
                 placeholder="Insert product quantity"
                 onChange={(e) => handleStock(e, i, "qty")}
                 defaultValue={item.qty}
+                className={styles.form__input}
               />
             </div>
           </div>

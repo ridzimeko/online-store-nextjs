@@ -1,4 +1,3 @@
-import Link from "next/link";
 import styles from "./Register.module.scss";
 import { useRouter } from "next/router";
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
@@ -61,10 +60,30 @@ const RegisterView = ({
       setToaster={setToaster}
     >
       <form onSubmit={handleSubmit}>
-        <Input label="Email" name="email" type="email" />
-        <Input label="Fullname" name="fullname" type="text" />
-        <Input label="Phone" name="phone" type="number" />
-        <Input label="Password" name="password" type="password" />
+        <Input
+          className={styles.register__input}
+          label="Email"
+          name="email"
+          type="email"
+        />
+        <Input
+          className={styles.register__input}
+          label="Fullname"
+          name="fullname"
+          type="text"
+        />
+        <Input
+          className={styles.register__input}
+          label="Phone"
+          name="phone"
+          type="number"
+        />
+        <Input
+          className={styles.register__input}
+          label="Password"
+          name="password"
+          type="password"
+        />
         <Button className={styles.register__button} disabled={isLoading}>
           {isLoading ? "Loading..." : "Register"}
         </Button>
