@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 import styles from "./AuthLayout.module.scss";
 
 type Proptypes = {
@@ -7,11 +7,10 @@ type Proptypes = {
   children: React.ReactNode;
   link: string;
   linkText?: string;
-  setToaster: Dispatch<SetStateAction<{}>>;
 };
 
 const AuthLayout = (props: Proptypes) => {
-  const { title, children, link, linkText, setToaster } = props;
+  const { title, children, link, linkText } = props;
   return (
     <div className={styles.auth}>
       <h1 className={styles.auth__title}>{title}</h1>

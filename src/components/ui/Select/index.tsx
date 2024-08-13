@@ -31,15 +31,16 @@ const Select = (props: Proptypes) => {
           disabled={disabled}
           className={styles.select__container__input}
         >
-          {options.map((option: Option) => (
-            <option
-              value={option.value}
-              key={option.label}
-              selected={option.selected}
-            >
-              {option.label}
-            </option>
-          ))}
+          {!!options &&
+            options.map((option: Option) => (
+              <option
+                value={option.value}
+                key={option.label}
+                selected={option.selected}
+              >
+                {option.label}
+              </option>
+            ))}
         </select>
       </div>
     </div>

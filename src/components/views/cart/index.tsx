@@ -60,7 +60,7 @@ const CartView = (props: PropTypes) => {
             <Fragment key={`${item.id}-${item.size}`}>
               <div className={styles.cart__main__list__item}>
                 <Image
-                  src={`${getProduct(item.id)?.image}`}
+                  src={getProduct(item.id)?.image || "/"}
                   alt={`${getProduct(item.id)?.name} with size ${item.size}`}
                   width={150}
                   height={150}

@@ -1,14 +1,9 @@
 import LoginView from "@/components/views/auth/login";
-import { Dispatch, SetStateAction } from "react";
 
-const loginPage = ({
-  setToaster,
-}: {
-  setToaster: Dispatch<SetStateAction<{}>>;
-}) => {
+const loginPage = () => {
   return (
     <>
-      <LoginView setToaster={setToaster} />
+      <LoginView />
     </>
   );
 };
