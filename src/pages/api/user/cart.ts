@@ -1,5 +1,11 @@
 import { retrieveDataById, updateData } from "@/lib/firebase/service";
-import jwt from "jsonwebtoken";
+import {
+  responseApiFailed,
+  responseApiMethodNotAllowed,
+  responseApiNotFound,
+  responseApiSuccess,
+} from "@/utils/responseApi";
+import { verify } from "@/utils/verifyToken";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -7,73 +13,34 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    const token = req.headers.authorization?.split(" ")[1];
-    if (token) {
-      jwt.verify(
-        token,
-        process.env.NEXTAUTH_SECRET || "",
-        async (err: any, decoded: any) => {
-          if (decoded) {
-            const user: any = await retrieveDataById("users", decoded.id);
+    verify(req, res, false, async (decoded: any) => {
+      const user: any = await retrieveDataById("users", decoded.id);
 
-            if (user) {
-              user.id = decoded.id;
-              res.status(200).json({
-                status: true,
-                statusCode: 200,
-                message: "success!",
-                data: user.carts,
-              });
-            } else {
-              res.status(404).json({
-                status: true,
-                statusCode: 404,
-                message: "Not found",
-                data: [],
-              });
-            }
-          } else {
-            res.status(403).json({
-              status: true,
-              statusCode: 403,
-              message: "Access denied",
-              data: [],
-            });
-          }
-        }
-      );
-    }
+      if (user) {
+        user.id = decoded.id;
+        responseApiSuccess(res, user.carts);
+      } else {
+        responseApiNotFound(res);
+      }
+    });
   } else if (req.method === "PUT") {
     const { data } = req.body;
-    const token = req.headers.authorization?.split(" ")[1] || "";
-    jwt.verify(
-      token,
-      process.env.NEXTAUTH_SECRET || "",
-      async (error: any, decoded: any) => {
-        if (decoded) {
-          await updateData("users", decoded.id, data, (result: boolean) => {
-            if (result) {
-              res.status(200).json({
-                status: true,
-                statusCode: 200,
-                message: "success",
-              });
-            } else {
-              res.status(400).json({
-                status: false,
-                statusCode: 400,
-                message: "failed",
-              });
-            }
-          });
+    verify(req, res, false, async (decoded: any) => {
+      await updateData("users", decoded.id, data, (result: boolean) => {
+        if (result) {
+          responseApiSuccess(res);
         } else {
-          res.status(403).json({
-            status: false,
-            statusCode: 403,
-            message: "Access denied",
-          });
+          responseApiFailed(res);
         }
-      }
-    );
+      });
+    });
+  } else {
+    responseApiMethodNotAllowed(res);
   }
 }
+
+export const config = {
+  api: {
+    externalResolver: true,
+  },
+};
