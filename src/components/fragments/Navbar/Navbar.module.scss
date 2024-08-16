@@ -49,6 +49,8 @@
       &__image {
         border-radius: 40px;
         cursor: pointer;
+        object-fit: cover;
+        object-position: center;
       }
 
       &__dropdown {

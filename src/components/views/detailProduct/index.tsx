@@ -22,6 +22,8 @@ const DetailProductView = (props: PropTypes) => {
   const router = useRouter();
   const [selectedSize, setSelectedSize] = useState("");
 
+  console.log(cart);
+
   const handleAddToCart = async () => {
     if (selectedSize !== "") {
       let newCart = [];

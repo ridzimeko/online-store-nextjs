@@ -18,7 +18,8 @@ export default async function handler(
 
       if (user) {
         user.id = decoded.id;
-        responseApiSuccess(res, user.carts);
+        const userCarts = user.carts || [];
+        responseApiSuccess(res, userCarts);
       } else {
         responseApiNotFound(res);
       }
