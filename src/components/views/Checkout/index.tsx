@@ -2,33 +2,30 @@ import { Product } from "@/types/product.type";
 import styles from "./Checkout.module.scss";
 import Image from "next/image";
 import { convertIDR } from "@/utils/currency";
-import { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Button from "@/components/ui/Button";
 import userServices from "@/services/user";
-import { ToasterContext } from "@/context/ToasterContext";
 import productServices from "@/services/product";
 import { useSession } from "next-auth/react";
 import ModalChangeAddress from "./ModalChangeAddress";
 
 const CheckoutView = () => {
-  const { setToaster } = useContext(ToasterContext);
-
   const session: any = useSession();
   const [profile, setProfile] = useState<any>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedAddress, setSelectedAddress] = useState(0);
   const [changeAddress, setChangeAddress] = useState(false);
 
-  console.log(selectedAddress, profile.address);
-
   const getProfile = async () => {
     const { data } = await userServices.getProfile();
     setProfile(data.data);
-    data.data.address.filter((address: { isMain: boolean }, id: number) => {
-      if (address.isMain) {
-        setSelectedAddress(id);
-      }
-    });
+    if (data?.data?.address?.length > 0) {
+      data.data.address.filter((address: { isMain: boolean }, id: number) => {
+        if (address.isMain) {
+          setSelectedAddress(id);
+        }
+      });
+    }
   };
 
   const getAllProducts = async () => {
@@ -92,7 +89,9 @@ const CheckoutView = () => {
                 </Button>
               </div>
             ) : (
-              <p>No Address Found</p>
+              <Button type="button" onClick={() => setChangeAddress(true)}>
+                Add New Address
+              </Button>
             )}
           </div>
           <div className={styles.checkout__main__list}>
@@ -151,7 +150,7 @@ const CheckoutView = () => {
               )
             ) : (
               <p className={styles.checkout__main__list__empty}>
-                profile.carts is empty
+                Cart is empty
               </p>
             )}
           </div>
@@ -183,7 +182,8 @@ const CheckoutView = () => {
       </div>
       {changeAddress && (
         <ModalChangeAddress
-          address={profile.address}
+          profile={profile}
+          setProfile={setProfile}
           setChangeAddress={setChangeAddress}
           selectedAddress={selectedAddress}
           setSelectedAddress={setSelectedAddress}

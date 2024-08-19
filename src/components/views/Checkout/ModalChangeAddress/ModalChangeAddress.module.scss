@@ -9,12 +9,49 @@
     border-radius: 8px;
     margin-top: 20px;
     display: flex;
-    flex-direction: column;
     gap: 8px;
-    cursor: pointer;
 
     &--active {
       border: 1px solid #000;
+    }
+
+    &__info {
+      cursor: pointer;
+      width: 95%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      &__title {
+        margin-bottom: 10px;
+      }
+    }
+
+    &__action {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      &__delete,
+      &__change {
+        height: 40px;
+        width: 40px;
+        padding: 0;
+      }
+    }
+  }
+
+  &__btn {
+    margin-top: 20px;
+  }
+
+  &__form {
+    margin-top: 20px;
+
+    &__group {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
   }
 }
