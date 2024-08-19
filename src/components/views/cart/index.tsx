@@ -10,6 +10,7 @@ import userServices from "@/services/user";
 import { ToasterContext } from "@/context/ToasterContext";
 import productServices from "@/services/product";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 const CartView = () => {
   const { setToaster } = useContext(ToasterContext);
@@ -188,9 +189,11 @@ const CartView = () => {
           <p>{convertIDR(0)}</p>
         </div>
         <hr />
-        <Button type="button" className={styles.cart__summary__button}>
-          Checkout
-        </Button>
+        <Link href="/checkout">
+          <Button type="button" className={styles.cart__summary__button}>
+            Checkout
+          </Button>
+        </Link>
       </div>
     </div>
   );
